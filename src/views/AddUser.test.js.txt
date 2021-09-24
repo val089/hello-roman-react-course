@@ -1,0 +1,39 @@
+import React from 'react';
+import AddUser from './AddUser';
+import Dashboard from './Dashboard';
+import { screen, fireEvent } from '@testing-library/react';
+import { render } from 'test-utils';
+
+//poniżej jest test integracyjny, ponieważ integruje ze sobą kilka elementów jak AddUser i Dashboard
+describe('Form Field', () => {
+  it('Add new user to the list', () => {
+    render(
+      <>
+        <AddUser />
+        <Dashboard />
+      </>
+    );
+    fireEvent.change(screen.getByTestId('Name'), { target: { value: 'Grażyna' } });
+    fireEvent.change(screen.getByTestId('Attendance'), { target: { value: '55%' } });
+    fireEvent.change(screen.getByTestId('Average'), { target: { value: '4.5' } });
+    fireEvent.click(screen.getByTestId('Consent'));
+    fireEvent.click(screen.getByText('Add')); //sprawdzamy czy wysłaliśmy formularz
+    screen.getByText('Grażyna');
+  });
+
+  it('Prevents adding new user if the consent is not checked', () => {
+    render(
+      <>
+        <AddUser />
+        <Dashboard />
+      </>
+    );
+    fireEvent.change(screen.getByTestId('Name'), { target: { value: 'Grażyna' } });
+    fireEvent.change(screen.getByTestId('Attendance'), { target: { value: '55%' } });
+    fireEvent.change(screen.getByTestId('Average'), { target: { value: '4.5' } });
+    // fireEvent.click(screen.getByTestId('Consent')); ---> nie udzielamy zgody
+    fireEvent.click(screen.getByText('Add')); //sprawdzamy czy wysłaliśmy formularz
+    const newUser = screen.queryByText('Grażyna'); //queryByText zwraca pasujący element, a jak nie zwraca null,a  tablicę przy queryAllByText
+    expect(newUser).not.toBeInTheDocument();
+  });
+});

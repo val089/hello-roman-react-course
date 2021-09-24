@@ -15,11 +15,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const FormField = ({ value, onChange, label, name, id, type = 'text', ...props }) => {
+const FormField = ({ value, onChange, label, name, id, type = 'text' }) => {
   return (
     <Wrapper>
       <Label htmlFor={id}>{label}</Label>
-      <Input name={name} id={id} type={type} onChange={onChange} value={value} />
+      {/* data-testid --> dodajemy po to żeby mieć po czym złapać inputa w trakcie testowania ->
+      info na ten temat znajdziesz w dokumentacji react testing library*/}
+      <Input name={name} id={id} type={type} onChange={onChange} value={value} data-testid={label} />
     </Wrapper>
   );
 };

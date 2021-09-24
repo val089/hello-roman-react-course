@@ -1,0 +1,3 @@
+//tworzymy plik mockServiceWorker.js w folderze public skąd hostowana jest nasza aplikacja
+
+npx msw init ./public --save

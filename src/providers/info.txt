@@ -1,0 +1,3 @@
+jest to wzorzec
+
+Tworzymy provider, który będzie przekazywał nam metody do poszczególnych komponentów, żeby nie trzymać wszystkiego w jednym pliku
